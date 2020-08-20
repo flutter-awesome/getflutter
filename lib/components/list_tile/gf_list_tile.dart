@@ -1,17 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:getflutter/colors/gf_color.dart';
-import 'package:getflutter/components/avatar/gf_avatar.dart';
+import 'package:getwidget/getwidget.dart';
 
 class GFListTile extends StatelessWidget {
+  /// Creates ListTile with leading, title, trailing, image widget for almost every type of ListTile design.
+  const GFListTile({
+    Key key,
+    this.titleText,
+    this.subtitleText,
+    this.color,
+    this.avatar,
+    this.title,
+    this.subTitle,
+    this.description,
+    this.icon,
+    this.padding = const EdgeInsets.all(8),
+    this.margin = const EdgeInsets.all(16),
+  }) : super(key: key);
+
   ///type of [String] used to pass text, alternative to title property and gets higher priority than title
   final String titleText;
 
   ///type of [String] used to pass text, alternative to subtitle property and gets higher priority than subtitle
   final String subtitleText;
 
-  /// The GFListTile's background color. Can be given [Colors] or [GFColor]
-  final dynamic color;
+  /// The GFListTile's background color. Can be given [Color] or [GFColors]
+  final Color color;
 
   /// type of [Widget] or [GFAvatar] used to create rounded user profile
   final Widget avatar;
@@ -28,63 +42,56 @@ class GFListTile extends StatelessWidget {
   /// The icon to display inside the [GFListTile]. see [Icon]
   final Widget icon;
 
+  /// defines the margin of GFListTile
+  final EdgeInsets margin;
+
+  /// defines the padding of GFListTile
   final EdgeInsets padding;
 
-  /// Creates ListTile with leading, title, trailing, image widget for almost every type of ListTile design.
-  const GFListTile({
-    Key key,
-    this.titleText,
-    this.subtitleText,
-    this.color,
-    this.avatar,
-    this.title,
-    this.subTitle,
-    this.description,
-    this.icon,
-    this.padding = const EdgeInsets.all(8.0),
-  }) : super(key: key);
-
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(minHeight: 50),
-      padding: padding,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          avatar != null ? avatar : Container(),
-          Expanded(
+  Widget build(BuildContext context) => Container(
+//        constraints: const BoxConstraints(minHeight: 50),
+        padding: padding,
+        margin: margin,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            avatar ?? Container(),
+            Expanded(
               child: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      titleText != null
-                          ? Text(
-                              titleText,
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                  color: getGFColor(GFColor.dark)),
-                            )
-                          : title ?? Container(),
-                      subtitleText != null
-                          ? Text(
-                              subtitleText,
-                              style: TextStyle(
-                                  fontSize: 14.5, color: Colors.black54),
-                            )
-                          : subTitle ?? Container(),
-                      description ?? Container()
-                    ],
-                  ))),
-          icon != null ? icon : Container(),
-        ],
-      ),
-    );
-  }
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    titleText != null
+                        ? Text(
+                            titleText,
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                                color: GFColors.DARK),
+                          )
+                        : title ?? Container(),
+                    subtitleText != null
+                        ? Text(
+                            subtitleText,
+                            style: const TextStyle(
+                              fontSize: 14.5,
+                              color: Colors.black54,
+                            ),
+                          )
+                        : subTitle ?? Container(),
+                    description ?? Container()
+                  ],
+                ),
+              ),
+            ),
+            icon ?? Container(),
+          ],
+        ),
+      );
 }
